@@ -13,19 +13,19 @@ public class ChangeInfoClass extends JDialog {
     private JTextField maxNumberField;
 
     ChangeInfoClass(ClassContainer classContainer, String className, JTable classesFrame) {
-        Class editClass = classContainer.getClassByKey(className);
-        String oldClassname = editClass.getGroupName();
+        Class editClassname = classContainer.getClassByKey(className);
+        String oldClassname = editClassname.getGroupName();
         this.add(changeClass);
         this.pack();
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        classnameField.setText(editClass.getGroupName());
-        maxNumberField.setText(String.valueOf(editClass.getMaxNumberOfStudents()));
+        classnameField.setText(editClassname.getGroupName());
+        maxNumberField.setText(String.valueOf(editClassname.getMaxNumberOfStudents()));
 
         buttonOK.addActionListener((e) -> {
             try {
-                classContainer.editClass(oldClassname, classnameField.getText(), Integer.parseInt(maxNumberField.getText()));
+                classContainer.editClassname(oldClassname, classnameField.getText(), Integer.parseInt(maxNumberField.getText()));
                 this.setVisible(false);
                 classesFrame.updateUI();
             } catch (Exception err) {

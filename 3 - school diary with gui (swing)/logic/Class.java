@@ -79,6 +79,22 @@ public class Class {
         return students.stream().filter(student -> student.getSecondName().contains(secondName)).collect(Collectors.toList());
     }
 
+    public Class searchPartialAndReturnClass(final String partialWord) {
+        List<Student> result = new ArrayList<Student>();
+
+        for (Student s : this.students) {
+            if (s.getSecondName().contains(partialWord)) {
+                result.add(s);
+            } else if (s.getName().contains(partialWord)) {
+                result.add(s);
+            }
+        }
+
+        Class tempClass = new Class(this.groupName, this.maxNumberOfStudents);
+        tempClass.students = result;
+        return tempClass;
+    }
+
     Comparator<Student> compareByPoints = new Comparator<Student>() {
         @Override
         public int compare(Student o1, Student o2) {
@@ -91,10 +107,10 @@ public class Class {
         }
     };
 
-    public List<Student> sortByName() {
+    public void sortByName() {
         List<Student> studentsToReturn = students;
         Collections.sort(studentsToReturn, Student::compareTo);
-        return studentsToReturn;
+        this.students = studentsToReturn;
     }
 
     public List<Student> sortByPoints() {

@@ -4,8 +4,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ClassContainer {
-    private final Map<String, Class> classes = new HashMap<String, Class>();
+    private Map<String, Class> classes = new HashMap<String, Class>();
 
+    public Set<String> getKeySet(){
+        return classes.keySet();
+    }
 
     public void addClass(final Class className) {
         classes.put(className.getGroupName(), className);
@@ -16,7 +19,7 @@ public class ClassContainer {
         classes.put(className, newClass);
     }
 
-    public void editClass(final String oldClassName, final String newClassName, final int quantity) {
+    public void editClassname(final String oldClassName, final String newClassName, final int quantity) {
         classes.get(oldClassName).setGroupName(newClassName);
         classes.get(oldClassName).setMaxNumberOfStudents(quantity);
     }
@@ -39,6 +42,10 @@ public class ClassContainer {
         for (String key : classes.keySet()) {
             System.out.println("Classname: " + key + "\nPercentage of filling: " + classes.get(key).numberOfStudents() * 100 / classes.get(key).getMaxNumberOfStudents() + "%");
         }
+    }
+
+    public void sortByClassname() {
+        this.classes = new TreeMap<>(this.classes);
     }
 
     public Class getClassByKey(String key) {
