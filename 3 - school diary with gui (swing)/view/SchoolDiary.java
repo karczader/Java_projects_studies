@@ -11,42 +11,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SchoolDiary extends JFrame {
-    private final ClassContainer studentClass;
     private String currentClass = "";
     private String currentStudent = "";
-    private JTable StudentsTable;
-    private JTable GroupsTable;
-    private JButton addStudentStudent;
+    private JTable studentsFrame;
+    private JTable classesFrame;
+    private JButton addStudentButton;
     private JButton deleteStudentButton;
     private JPanel mainPanel;
     private JLabel name;
     private JLabel secondName;
     private JButton sortByNameButton;
-    private JButton addGroupButton;
-    private JButton deleteGroupButton;
+    private JButton addClassButton;
+    private JButton deleteClassButton;
     private JButton sortByPointsButton;
+    private JButton changeInfoAboutStudentButton;
+    private JButton changeInfoAboutClassButton;
 
 
     public SchoolDiary(ClassContainer classContainer) {
-        this.studentClass = classContainer;
-        this.GroupsTable.setModel(new ClassesFrame(classContainer));
+        this.classesFrame.setModel(new ClassesFrame(classContainer));
 
+        //studentsFrame.addPropertyChangeListener(evt -> System.out.println("Data changed"));
 
-        addStudentStudent.addActionListener(e -> {
-            if (currentClass.equals("")) {
-                JOptionPane.showMessageDialog(null, "You must choose class", "Error",
-                        JOptionPane.ERROR_MESSAGE);
-            } else {
-                new AddStudent(classContainer, currentClass, StudentsTable, GroupsTable).setVisible(true);
-
-            }
-        });
-
-        addGroupButton.addActionListener(e -> new AddClasses(classContainer, GroupsTable).setVisible(true));
-        StudentsTable.addPropertyChangeListener(evt -> System.out.println("Data changed"));
-
-
-        StudentsTable.addMouseListener(new MouseAdapter() {
+        //choose current student
+        studentsFrame.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 JTable target = (JTable) e.getSource();
                 if (target.getSelectedRow() != -1) {
@@ -55,18 +43,19 @@ public class SchoolDiary extends JFrame {
             }
         });
 
-        GroupsTable.addMouseListener(new MouseAdapter() {
+        //choose current class
+        classesFrame.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
                 JTable target = (JTable) e.getSource();
                 if (target.getSelectedRow() != -1) {
                     List<Class> tmp = new ArrayList<Class>(classContainer.getClasses().values());
                     currentClass = tmp.get(target.getSelectedRow()).getGroupName();
-                    StudentsTable.setModel(new StudentsFrame(classContainer, currentClass));
+                    studentsFrame.setModel(new StudentsFrame(classContainer, currentClass));
                 }
             }
         });
 
-
+        //delete student or class
         deleteStudentButton.addActionListener(e -> {
             if (currentStudent.equals("")) {
                 JOptionPane.showMessageDialog(null, "You must choose student", "Error",
@@ -74,17 +63,17 @@ public class SchoolDiary extends JFrame {
             } else {
                 classContainer.getClassByKey(currentClass).removeStudent(currentStudent);
                 currentStudent = "";
-                StudentsTable.updateUI();
+                studentsFrame.updateUI();
             }
         });
 
-        deleteGroupButton.addActionListener(e -> {
+        deleteClassButton.addActionListener(e -> {
             if (currentClass.equals("")) {
                 JOptionPane.showMessageDialog(null, "You must choose class!", "Error",
                         JOptionPane.ERROR_MESSAGE);
             } else {
                 if (classContainer.getClasses().size() == 1) {
-                    GroupsTable.setModel(new AbstractTableModel() {
+                    classesFrame.setModel(new AbstractTableModel() {
                         @Override
                         public int getRowCount() {
                             return 0;
@@ -106,7 +95,7 @@ public class SchoolDiary extends JFrame {
                 currentClass = "";
                 currentStudent = "";
 
-                StudentsTable.setModel(new AbstractTableModel() {
+                studentsFrame.setModel(new AbstractTableModel() {
                     @Override
                     public int getRowCount() {
                         return 0;
@@ -123,11 +112,42 @@ public class SchoolDiary extends JFrame {
                     }
                 });
                 if (classContainer.getClasses().size() != 0) {
-                    GroupsTable.updateUI();
+                    classesFrame.updateUI();
                 }
 
             }
         });
+
+        //change info about student or class
+        changeInfoAboutStudentButton.addActionListener(e-> {
+            if (currentStudent.equals("")) {
+                JOptionPane.showMessageDialog(null, "You must choose student", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                //it doest nothing so far
+                new ChangeInfoStudent().setVisible(true);
+            }
+        });
+        changeInfoAboutClassButton.addActionListener(e-> {
+            if (currentClass.equals("")) {
+                JOptionPane.showMessageDialog(null, "You must choose class", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                new ChangeInfoClass(classContainer, currentClass, classesFrame).setVisible(true);
+            }
+        });
+
+        //add new student or class
+        addStudentButton.addActionListener(e -> {
+            if (currentClass.equals("")) {
+                JOptionPane.showMessageDialog(null, "You must choose class", "Error",
+                        JOptionPane.ERROR_MESSAGE);
+            } else {
+                new AddStudent(classContainer, currentClass, studentsFrame, classesFrame).setVisible(true);
+
+            }
+        });
+        addClassButton.addActionListener(e -> new AddClasses(classContainer, classesFrame).setVisible(true));
     }
 
     public JPanel getMainPanel() {

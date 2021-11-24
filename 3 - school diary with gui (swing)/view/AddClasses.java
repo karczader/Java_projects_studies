@@ -6,9 +6,9 @@ import javax.swing.*;
 
 public class AddClasses extends JFrame {
     private JPanel addGroup;
-    private JTextField groupName;
+    private JTextField classname;
     private JTextField quantity;
-    private JButton addGroupButton;
+    private JButton addClassButton;
 
     public AddClasses(ClassContainer studentClass, JTable tableToUpdate) {
         this.add(addGroup);
@@ -16,13 +16,13 @@ public class AddClasses extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-        addGroupButton.addActionListener((e) -> {
+        addClassButton.addActionListener((e) -> {
             try {
-                studentClass.addClass(groupName.getText(), Integer.parseInt(quantity.getText()));
+                studentClass.addClass(classname.getText(), Integer.parseInt(quantity.getText()));
                 this.setVisible(false);
                 tableToUpdate.updateUI();
             } catch (Exception err) {
-                JOptionPane.showMessageDialog(null, "You can't enter a empty data!", "Error",
+                JOptionPane.showMessageDialog(null, "Wrong data!", "Error",
                         JOptionPane.ERROR_MESSAGE);
             }
         });

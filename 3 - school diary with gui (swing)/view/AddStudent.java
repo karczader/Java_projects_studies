@@ -29,7 +29,7 @@ public class AddStudent extends JFrame {
                 tableToUpdate2.updateUI();
 
             } catch (Exception err) {
-                JOptionPane.showMessageDialog(null, "You can't enter a empty data!", "Error",
+                JOptionPane.showMessageDialog(null, "Wrong data!", "Error",
                         JOptionPane.ERROR_MESSAGE);
 
             }

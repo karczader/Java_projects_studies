@@ -26,6 +26,11 @@ public class Class {
         return maxNumberOfStudents;
     }
 
+    public void setMaxNumberOfStudents(int maxNumber) {
+        this.maxNumberOfStudents = maxNumber;
+    }
+
+
     public List<Student> getStudents() {
         return students;
     }
@@ -46,6 +51,9 @@ public class Class {
         }
     }
 
+    public void editStudent(final Student student) {
+
+    }
 
     public void addPoints(final Student student, final double points) {
         if (isStudentInGroup(student)) {
@@ -54,7 +62,6 @@ public class Class {
             System.err.println("Student doesn't belong to this group");
         }
     }
-
 
     public void removePoints(final Student student, final double points) {
         if (isStudentInGroup(student)) {

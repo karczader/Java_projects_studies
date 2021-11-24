@@ -16,6 +16,11 @@ public class ClassContainer {
         classes.put(className, newClass);
     }
 
+    public void editClass(final String oldClassName, final String newClassName, final int quantity) {
+        classes.get(oldClassName).setGroupName(newClassName);
+        classes.get(oldClassName).setMaxNumberOfStudents(quantity);
+    }
+
     public void removeClass(final String className) {
         classes.remove(className);
     }

@@ -47,7 +47,6 @@ public class Student implements Comparable<Student> {
         this.studentStatus = studentStatus;
     }
 
-
     public StudentCondition getStudentStatus() {
         return studentStatus;
     }
